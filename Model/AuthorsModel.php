@@ -2,8 +2,7 @@
 
 class AuthorsModel{
 
-    private $model;
-    private $view;
+    private $db;
 
     function __construct(){
         // me conecto a la base de datos, abro conexión

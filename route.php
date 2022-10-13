@@ -2,6 +2,7 @@
 
 require_once 'Controller/BooksController.php';
 require_once 'Controller/AuthorsController.php';
+require_once 'Controller/LibraryController.php';
 
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
 
@@ -14,13 +15,14 @@ if (!empty($_GET['action'])) {
 
 $params = explode('/', $action);
 
+$libraryController = new LibraryController();
 $booksController = new BooksController();
 $authorsController = new AuthorsController();
 
 // determina que camino seguir según la acción
 switch ($params[0]){
     case 'home':
-        $booksController->viewHome();
+        $libraryController->viewHome();
         break;
     case 'autores':
         $authorsController->viewAutores();

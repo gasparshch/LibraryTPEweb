@@ -2,14 +2,10 @@
 require_once './Model/BooksModel.php';
 require_once './Model/AuthorsModel.php';
 
-class BooksView{
+class AuthorsView{
 
     function __construct(){
 
-    }
-
-    function showHomeLocation(){
-        header("Location: ".BASE_URL."home");
     }
 
     function showAutores($autores){

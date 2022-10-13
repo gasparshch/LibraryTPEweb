@@ -1,29 +1,22 @@
 <?php
 require_once './Model/BooksModel.php';
 require_once './View/BooksView.php';
-require_once './Model/AuthorsModel';
+require_once './Model/AuthorsModel.php';
+require_once './View/LibraryView.php';
 
 // el controlador divide el trabajo a la bbdd y al frontend
 class BooksController{
 
     private $model;
     private $view;
+    private $libraryView;
     private $authorsModel;
 
     function __construct(){
         $this->model = new BooksModel();
         $this->view = new BooksView();
+        $this->libraryView = new LibraryView();
         $this->authorsModel = new AuthorsModel();
-    }
-
-    function viewHome(){
-        // el model se encarga de hablar con la ddbb
-        $autores = $this->authorsModel->getAutoresFromDB();
-        $libros = $this->model->getLibrosFromDB();
-        //$autor = $this->model->getAutorFromDB($id_autor);
-
-        // el view se encarga del front end
-        $this->view->showHome($autores, $libros);
     }
 
     function viewLibros(){
@@ -56,25 +49,25 @@ class BooksController{
 
         if(!empty($_POST['titulo']) && !empty($_POST['genero']) && !empty($_POST['descripcion']) && !empty($_POST['id_autor'])) {
             $this->model->createLibroFromDB($_POST['titulo'], $_POST['genero'], $_POST['descripcion'], $_POST['id_autor']);
-            $this->view->showHomeLocation();
+            $this->libraryView->showHomeLocation();
         } else {
-            $this->view->showHomeLocation();
+            $this->libraryView->showHomeLocation();
         }
     }
 
     function deleteLibro($id){
 
         $this->model->deleteLibroFromDB($id);
-        $this->view->showHomeLocation();
+        $this->libraryView->showHomeLocation();
     
     }
 
     function updateLibro($id){
         if(!empty($_POST['titulo']) && !empty($_POST['genero']) && !empty($_POST['descripcion']) && !empty($_POST['id_autor'])) {
             $this->model->updateLibroFromDB($id, $_POST['titulo'], $_POST['genero'], $_POST['descripcion'], $_POST['id_autor']);
-            $this->view->showHomeLocation();
+            $this->libraryView->showHomeLocation();
         } else {
-            $this->view->showHomeLocation();
+            $this->libraryView->showHomeLocation();
         }
     }
 

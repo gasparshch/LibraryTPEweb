@@ -1,6 +1,7 @@
 <?php
 
-require_once 'Controller/BibliotecaController.php';
+require_once 'Controller/BooksController.php';
+require_once 'Controller/AuthorsController.php';
 
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
 
@@ -13,39 +14,40 @@ if (!empty($_GET['action'])) {
 
 $params = explode('/', $action);
 
-$bibliotecaController = new BibliotecaController();
+$booksController = new BooksController();
+$authorsController = new AuthorsController();
 
 // determina que camino seguir según la acción
 switch ($params[0]){
     case 'home':
-        $bibliotecaController->viewHome();
+        $booksController->viewHome();
         break;
     case 'autores':
-        $bibliotecaController->viewAutores();
+        $authorsController->viewAutores();
         break;
     case 'libros':
-        $bibliotecaController->viewLibros();
+        $booksController->viewLibros();
         break;
     case 'aboutLibro':
-        $bibliotecaController->viewAboutLibro($params[1]);
+        $booksController->viewAboutLibro($params[1]);
         break;
     case 'aboutAutor':
-        $bibliotecaController->viewAboutAutor($params[1]);
+        $authorsController->viewAboutAutor($params[1]);
         break;
     case 'librosAutor':
-        $bibliotecaController->viewLibrosAutor($params[1]);
+        $authorsController->viewLibrosAutor($params[1]);
         break;
     case 'crearLibro':
-        $bibliotecaController->createLibro();
+        $booksController->createLibro();
         break;
     case 'pagUpdateLibro':
-        $bibliotecaController->pagUpdateLibro($params[1]);
+        $booksController->pagUpdateLibro($params[1]);
         break;
     case 'updateLibro':
-        $bibliotecaController->updateLibro($params[1]);
+        $booksController->updateLibro($params[1]);
         break;
     case 'deleteLibro':
-        $bibliotecaController->deleteLibro($params[1]);
+        $booksController->deleteLibro($params[1]);
         break;
     default:
         echo '404 not found';

@@ -1,9 +1,7 @@
 <?php
 require_once './View/LibraryView.php';
 require_once './Model/BooksModel.php';
-require_once './View/BooksView.php';
 require_once './Model/AuthorsModel.php';
-require_once './View/AuthorsView.php';
 
 // el controlador divide el trabajo a la bbdd y al frontend
 class LibraryController{

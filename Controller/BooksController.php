@@ -1,34 +1,29 @@
 <?php
-require_once './Model/BibliotecaModel.php';
-require_once './View/BibliotecaView.php';
+require_once './Model/BooksModel.php';
+require_once './View/BooksView.php';
+require_once './Model/AuthorsModel';
 
 // el controlador divide el trabajo a la bbdd y al frontend
-class BibliotecaController{
+class BooksController{
 
     private $model;
     private $view;
+    private $authorsModel;
 
     function __construct(){
-        $this->model = new BibliotecaModel();
-        $this->view = new BibliotecaView();
+        $this->model = new BooksModel();
+        $this->view = new BooksView();
+        $this->authorsModel = new AuthorsModel();
     }
 
     function viewHome(){
         // el model se encarga de hablar con la ddbb
-        $autores = $this->model->getAutoresFromDB();
+        $autores = $this->authorsModel->getAutoresFromDB();
         $libros = $this->model->getLibrosFromDB();
         //$autor = $this->model->getAutorFromDB($id_autor);
 
         // el view se encarga del front end
         $this->view->showHome($autores, $libros);
-    }
-
-    function viewAutores(){
-        // el model se encarga de hablar con la ddbb
-        $autores = $this->model->getAutoresFromDB();
-
-        // el view se encarga del front end
-        $this->view->showAutores($autores); 
     }
 
     function viewLibros(){
@@ -42,31 +37,17 @@ class BibliotecaController{
     function viewAboutLibro($id){
         // el model se encarga de hablar con la ddbb
         $libro = $this->model->getLibroFromDB($id);
-        $autor = $this->model->getAutorFromDB($libro->id_autor);
+        $autor = $this->authorsModel->getAutorFromDB($libro->id_autor);
 
         // el view se encarga del front end
         $this->view->showAboutLibro($libro, $autor);
     }
 
-    function viewAboutAutor($id){
-        $autor = $this->model->getAutorFromDB($id);
-
-        $this->view->showAboutAutor($autor);
-    }
-
-    function viewLibrosAutor($id){
-    
-        $autor = $this->model->getAutorFromDB($id);
-        $libros = $this->model->getLibrosAutorFromDB($id);
-
-        $this->view->showLibrosAutor($autor, $libros);
-    }
-
     function pagUpdateLibro($id){
 
         $libro = $this->model->getLibroFromDB($id);
-        $autor = $this->model->getAutorFromDB($libro->id_autor);
-        $autores = $this->model->getAutoresFromDB();
+        $autor = $this->authorsModel->getAutorFromDB($libro->id_autor);
+        $autores = $this->authorsModel->getAutoresFromDB();
 
         $this->view->showPagUpdateLibro($id, $libro, $autor, $autores);
     }

@@ -18,12 +18,12 @@ class LibraryController{
 
     function viewHome(){
         // el model se encarga de hablar con la ddbb
-        $autores = $this->authorsModel->getAutoresFromDB();
-        $libros = $this->booksModel->getLibrosFromDB();
+        $authors = $this->authorsModel->getAuthorsFromDB();
+        $books = $this->booksModel->getBooksFromDB();
         //$autor = $this->model->getAutorFromDB($id_autor);
 
         // el view se encarga del front end
-        $this->view->showHome($autores, $libros);
+        $this->view->showHome($authors, $books);
     }
 
 }

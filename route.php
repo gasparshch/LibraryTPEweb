@@ -24,32 +24,50 @@ switch ($params[0]){
     case 'home':
         $libraryController->viewHome();
         break;
-    case 'autores':
-        $authorsController->viewAutores();
+    case 'books':
+        $booksController->viewBooks();
         break;
-    case 'libros':
-        $booksController->viewLibros();
+    case 'aboutBook':
+        $booksController->viewAboutBook($params[1]);
         break;
-    case 'aboutLibro':
-        $booksController->viewAboutLibro($params[1]);
+    case 'pagCreateBook':
+        $booksController->pagCreateBook();
         break;
-    case 'aboutAutor':
-        $authorsController->viewAboutAutor($params[1]);
+    case 'createBook':
+        $booksController->createBook();
         break;
-    case 'librosAutor':
-        $authorsController->viewLibrosAutor($params[1]);
+    case 'deleteBook':
+        $booksController->deleteBook($params[1]);
         break;
-    case 'crearLibro':
-        $booksController->createLibro();
+    case 'pagUpdateBook':
+        $booksController->pagUpdateBook($params[1]);
         break;
-    case 'pagUpdateLibro':
-        $booksController->pagUpdateLibro($params[1]);
+    case 'updateBook':
+        $booksController->updateBook($params[1]);
         break;
-    case 'updateLibro':
-        $booksController->updateLibro($params[1]);
+    case 'authors':
+        $authorsController->viewAuthors();
         break;
-    case 'deleteLibro':
-        $booksController->deleteLibro($params[1]);
+    case 'aboutAuthor':
+        $authorsController->viewAboutAuthor($params[1]);
+        break;
+    case 'booksAuthor':
+        $authorsController->viewBooksAuthor($params[1]);
+        break;
+    case 'pagCreateAuthor':
+        $authorsController->pagCreateAuthor();
+        break;
+    case 'createAuthor':
+        $authorsController->createAuthor();
+        break;
+    case 'deleteAuthor':
+        $authorsController->deleteAuthor($params[1]);
+        break;
+    case 'pagUpdateAuthor':
+        $authorsController->pagUpdateAuthor($params[1]);
+        break;
+    case 'updateAuthor':
+        $authorsController->updateAuthor($params[1]);
         break;
     default:
         echo '404 not found';

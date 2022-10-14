@@ -8,77 +8,85 @@ class BooksModel{
         // me conecto a la base de datos, abro conexión
         $this->db = new PDO('mysql:host=localhost;'.'dbname=db_biblioteca;charset=utf8', 'root', '');
     }
-    
-    function getLibrosFromDB() {
+
+    function getBooksFromDB() {
          
         // preparo la sentencia para devolver el resultado
-        $sentencia = $this->db->prepare("select * from libros");
+        $query = $this->db->prepare("select * from books");
         
-        $sentencia->execute();
-        $libros = $sentencia->fetchAll(PDO::FETCH_OBJ);
+        $query->execute();
+        $books = $query->fetchAll(PDO::FETCH_OBJ);
     
         // devuelvo todo el array de tareas
-        return $libros;
+        return $books;
     
     }
 
-    function getLibroFromDB($id){
+    function getBookFromDB($id_book){
 
         // preparo la sentencia para devolver el resultado
         // el resultado es un solo objeto que busqué con el id
-        $sentencia = $this->db->prepare("select * from libros WHERE id_libro=?");
+        $query = $this->db->prepare("select * from books WHERE id_book=?");
         
         // lo ejecuto y capturo
-        $sentencia->execute(array($id));
-        $libro = $sentencia->fetch(PDO::FETCH_OBJ);
+        $query->execute(array($id_book));
+        $book = $query->fetch(PDO::FETCH_OBJ);
     
         // devuelvo todo el array de tareas
-        return $libro;
+        return $book;
     
     }
 
-    function getLibrosAutorFromDB($id){
+    function getBooksAuthorFromDB($id_author){
 
-        $sentencia = $this->db->prepare("SELECT libros.*, autores.nombre FROM libros INNER JOIN autores ON libros.id_autor = autores.id_autor WHERE libros.id_autor = '".$id ."'");
-        $sentencia->execute(array($id));
+        $query = $this->db->prepare("SELECT books.*, authors.namename FROM books INNER JOIN authors ON books.id_author = authors.id_author WHERE books.id_author = ?");
+        $query->execute(array($id_author));
     
-        return $sentencia->fetchAll(PDO::FETCH_OBJ);
+        return $query->fetchAll(PDO::FETCH_OBJ);
     
     }
 
-    function createLibroFromDB($titulo, $genero, $descripcion, $id_autor) {
+    function createBookFromDB($title, $genre, $descrip, $id_author) {
 
         // preparo la sentencia para devolver el resultado
-        $sentencia = $this->db->prepare("select * from libros");
+        $query = $this->db->prepare("select * from books");
             
         // capturo todos los items para posterior manipulación
-        $sentencia->execute();
-        $libros = $sentencia->fetchAll(PDO::FETCH_OBJ);
+        $query->execute();
+        $books = $query->fetchAll(PDO::FETCH_OBJ);
     
         // busco el ID mas grande, habria que optimizar con lastInsertID()
         $max = 0;
-        foreach($libros as $libro){
-            if($libro->id_libro > $max){
-                $max = $libro->id_libro;
+        foreach($books as $book){
+            if($book->id_book > $max){
+                $max = $book->id_book;
             }
         }
         $proxId = $max + 1;
     
         // preparo la sentencia para insertar
-        $sentencia = $this->db->prepare("INSERT INTO libros(id_libro, titulo, genero, descripcion, id_autor) VALUES(?, ?, ?, ?, ?) ");
+        $query = $this->db->prepare("INSERT INTO books(id_book, title, genre, descrip, id_author) VALUES(?, ?, ?, ?, ?) ");
     
         // ejecuto la sentencia, le paso un arreglo que va a tomar esos signos de pregunta
-        $sentencia->execute(array($proxId, $titulo, $genero, $descripcion, $id_autor));
+        $query->execute(array($proxId, $title, $genre, $descrip, $id_author));
     
     }
 
-    function deletelibroFromDB($id){
+    function deleteBookFromDB($id_book){
 
         // preparo la sentencia para borrar
-        $sentencia = $this->db->prepare("DELETE FROM libros WHERE id_libro=?");
+        $query = $this->db->prepare("DELETE FROM books WHERE id_book=?");
         
         // ejecuto la sentencia
-        $sentencia->execute(array($id));
+        $query->execute(array($id_book));
+    }
+
+    function updateBookFromDB($id_book, $title, $genre, $descrip, $id_author){
+        // preparo la sentencia para actualizar
+        $query = $this->db->prepare("UPDATE books SET title=?, genre=?, descrip=?, id_author=? WHERE id_book=?");
+    
+        // ejecuto la sentencia
+        $query->execute(array($title, $genre, $descrip, $id_author, $id_book));
     }
 
 }

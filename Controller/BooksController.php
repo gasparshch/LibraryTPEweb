@@ -19,56 +19,62 @@ class BooksController{
         $this->authorsModel = new AuthorsModel();
     }
 
-    function viewLibros(){
+    function viewBooks(){
         // el model se encarga de hablar con la ddbb
-        $libros = $this->model->getLibrosFromDB();
+        $books = $this->model->getBooksFromDB();
 
         // el view se encarga del front end
-        $this->view->showLibros($libros); 
+        $this->view->showBooks($books); 
     }
 
-    function viewAboutLibro($id){
+    function viewAboutBook($id_book){
         // el model se encarga de hablar con la ddbb
-        $libro = $this->model->getLibroFromDB($id);
-        $autor = $this->authorsModel->getAutorFromDB($libro->id_autor);
+        $book = $this->model->getBookFromDB($id_book);
+        $author = $this->authorsModel->getAuthorFromDB($book->id_author);
 
         // el view se encarga del front end
-        $this->view->showAboutLibro($libro, $autor);
+        $this->view->showAboutBook($book, $author);
     }
 
-    function pagUpdateLibro($id){
+    function pagUpdateBook($id_book){
 
-        $libro = $this->model->getLibroFromDB($id);
-        $autor = $this->authorsModel->getAutorFromDB($libro->id_autor);
-        $autores = $this->authorsModel->getAutoresFromDB();
+        $book = $this->model->getBookFromDB($id_book);
+        $author = $this->authorsModel->getAuthorFromDB($book->id_author);
+        $authors = $this->authorsModel->getAuthorsFromDB();
 
-        $this->view->showPagUpdateLibro($id, $libro, $autor, $autores);
+        $this->view->showPagUpdateBook($id_book, $book, $author, $authors);
     }
 
-    function createLibro(){
+    function createBook(){
 
-        if(!empty($_POST['titulo']) && !empty($_POST['genero']) && !empty($_POST['descripcion']) && !empty($_POST['id_autor'])) {
-            $this->model->createLibroFromDB($_POST['titulo'], $_POST['genero'], $_POST['descripcion'], $_POST['id_autor']);
+        if(!empty($_POST['title']) && !empty($_POST['genre']) && !empty($_POST['descrip']) && !empty($_POST['id_author'])) {
+            $this->model->createBookFromDB($_POST['title'], $_POST['genre'], $_POST['descrip'], $_POST['id_author']);
             $this->libraryView->showHomeLocation();
         } else {
             $this->libraryView->showHomeLocation();
         }
     }
 
-    function deleteLibro($id){
+    function deleteBook($id_book){
 
-        $this->model->deleteLibroFromDB($id);
+        $this->model->deleteBookFromDB($id_book);
         $this->libraryView->showHomeLocation();
     
     }
 
-    function updateLibro($id){
-        if(!empty($_POST['titulo']) && !empty($_POST['genero']) && !empty($_POST['descripcion']) && !empty($_POST['id_autor'])) {
-            $this->model->updateLibroFromDB($id, $_POST['titulo'], $_POST['genero'], $_POST['descripcion'], $_POST['id_autor']);
+    function updateBook($id_book){
+        if(!empty($_POST['title']) && !empty($_POST['genre']) && !empty($_POST['descrip']) && !empty($_POST['id_author'])) {
+            $this->model->updateBookFromDB($id_book, $_POST['title'], $_POST['genre'], $_POST['descrip'], $_POST['id_author']);
             $this->libraryView->showHomeLocation();
         } else {
             $this->libraryView->showHomeLocation();
         }
+    }
+
+    function pagCreateBook(){
+        // capturo los autores para luego elegir a cual pertenece este nuevo libro
+        $authors = $this->authorsModel->getAuthorsFromDB();
+        $this->view->showPagCreateBook($authors);
     }
 
 

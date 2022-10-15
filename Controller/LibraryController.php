@@ -20,7 +20,6 @@ class LibraryController{
         // el model se encarga de hablar con la ddbb
         $authors = $this->authorsModel->getAuthorsFromDB();
         $books = $this->booksModel->getBooksFromDB();
-        //$autor = $this->model->getAutorFromDB($id_autor);
 
         // el view se encarga del front end
         $this->view->showHome($authors, $books);

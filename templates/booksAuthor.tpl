@@ -1,7 +1,5 @@
-<h2>Libros escritos por: {$author->namename}</h2>
-<ul>
-
+<h2 class="text-center">Libros escritos por: {$author->namename}</h2>
+    
 {foreach from=$books item=$book}
-    <li>{$book->title}  </li>
+    {include file='templates/book.tpl'}
 {/foreach}
-</ul>

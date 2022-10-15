@@ -37,6 +37,15 @@ class AuthorsModel{
     
     }
 
+    function getBooksAuthorFromDB($id_author){
+
+        $query = $this->db->prepare("SELECT authors.namename, books.* FROM authors INNER JOIN books ON authors.id_author = books.id_author WHERE authors.id_author = ?");
+        $query->execute(array($id_author));
+    
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    
+    }
+
     function createAuthorFromDB($namename, $age, $bio){
         // preparo la sentencia para devolver el resultado
         $query = $this->db->prepare("select * from authors");

@@ -12,12 +12,12 @@ class BooksModel{
     function getBooksFromDB() {
          
         // preparo la sentencia para devolver el resultado
-        $query = $this->db->prepare("select * from books");
+        $query = $this->db->prepare("SELECT books.*, authors.namename FROM books INNER JOIN authors ON books.id_author = authors.id_author");
         
         $query->execute();
         $books = $query->fetchAll(PDO::FETCH_OBJ);
     
-        // devuelvo todo el array de tareas
+        // devuelvo todo el array
         return $books;
     
     }
@@ -26,23 +26,14 @@ class BooksModel{
 
         // preparo la sentencia para devolver el resultado
         // el resultado es un solo objeto que busqué con el id
-        $query = $this->db->prepare("select * from books WHERE id_book=?");
+        $query = $this->db->prepare("SELECT books.*, authors.namename FROM books INNER JOIN authors ON books.id_author = authors.id_author WHERE books.id_book = ?");
         
         // lo ejecuto y capturo
         $query->execute(array($id_book));
         $book = $query->fetch(PDO::FETCH_OBJ);
     
-        // devuelvo todo el array de tareas
+        // devuelvo todo el array
         return $book;
-    
-    }
-
-    function getBooksAuthorFromDB($id_author){
-
-        $query = $this->db->prepare("SELECT books.*, authors.namename FROM books INNER JOIN authors ON books.id_author = authors.id_author WHERE books.id_author = ?");
-        $query->execute(array($id_author));
-    
-        return $query->fetchAll(PDO::FETCH_OBJ);
     
     }
 

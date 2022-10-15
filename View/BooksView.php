@@ -20,9 +20,8 @@ class BooksView{
         $this->smarty->display('templates/footer.tpl');
     }
 
-    function showAboutBook($book, $author){
+    function showAboutBook($book){
         $this->smarty->assign('bookTitle', $book->title);
-        $this->smarty->assign('author', $author);
         $this->smarty->assign('book', $book);
         
         // renderizado

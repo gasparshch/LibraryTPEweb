@@ -30,10 +30,9 @@ class BooksController{
     function viewAboutBook($id_book){
         // el model se encarga de hablar con la ddbb
         $book = $this->model->getBookFromDB($id_book);
-        $author = $this->authorsModel->getAuthorFromDB($book->id_author);
 
         // el view se encarga del front end
-        $this->view->showAboutBook($book, $author);
+        $this->view->showAboutBook($book);
     }
 
     function pagUpdateBook($id_book){

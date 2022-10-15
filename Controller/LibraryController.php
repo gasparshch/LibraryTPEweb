@@ -7,6 +7,7 @@ require_once './Model/AuthorsModel.php';
 class LibraryController{
 
     private $view;
+    private $model;
     private $authorsModel;
     private $booksModel;
 

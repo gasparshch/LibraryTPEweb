@@ -35,7 +35,7 @@ class AuthorsController{
     function viewBooksAuthor($id_author){
         // capturo al autor y los libros que le pertenecen
         $author = $this->model->getAuthorFromDB($id_author);
-        $books = $this->booksModel->getBooksAuthorFromDB($id_author);
+        $books = $this->model->getBooksAuthorFromDB($author->id_author);
 
         $this->view->showBooksAuthor($author, $books);
     }

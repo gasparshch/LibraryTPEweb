@@ -63,7 +63,6 @@ class BooksController{
         $this->authHelper->checkLoggedIn();
         $this->model->deleteBookFromDB($id_book);
         $this->libraryView->showHomeLocation();
-    
     }
 
     function updateBook($id_book){

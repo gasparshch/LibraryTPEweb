@@ -18,6 +18,6 @@
             <input type="file" class="form-control" name="input_name" id="imageToUpload">
         </div>
         
-        <input type="submit" value="Editar" class="btn btn-outline-secondary type-letter">
+        <input type="submit" value="Agregar" class="btn btn-outline-secondary type-letter">
     </form>
 </div>

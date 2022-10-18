@@ -67,8 +67,14 @@ class AuthorsController{
 
     function deleteAuthor($id_author){
         $this->authHelper->checkLoggedIn();
-        $this->model->deleteAuthorFromDB($id_author);
-        $this->libraryView->showHomeLocation();
+        $author = $this->model->getAuthorFromDB($id_author);
+        $books = $this->model->getBooksAuthorFromDB($id_author);
+        if (count($books) > 0){
+            $this->view->showErrorDeleting($author);
+        } else {
+            $this->model->deleteAuthorFromDB($id_author);
+            $this->libraryView->showHomeLocation();
+        }
     
     }
 

@@ -54,5 +54,12 @@ class AuthorsView{
         $this->smarty->display('templates/footer.tpl');
     }
 
+    function showErrorDeleting($author){
+        $this->smarty->assign('author', $author);
+        // renderizado
+        $this->smarty->display('templates/header.tpl');
+        $this->smarty->display('templates/errorDeletingAuthor.tpl');
+        $this->smarty->display('templates/footer.tpl');
+    }
 
 }

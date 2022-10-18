@@ -54,7 +54,11 @@ class AuthorsController{
     function createAuthor(){
         $this->authHelper->checkLoggedIn();
         if(!empty($_POST['namename']) && !empty($_POST['age']) && !empty($_POST['bio'])) {
-            $this->model->createAuthorFromDB($_POST['namename'], $_POST['age'], $_POST['bio']);
+            if($_FILES['input_name']['type'] == "image/jpg" || $_FILES['input_name']['type'] == "image/jpeg" || $_FILES['input_name']['type'] == "image/png"){
+                $this->model->createAuthorFromDB($_POST['namename'], $_POST['age'], $_POST['bio'], $_FILES['input_name']['tmp_name']);
+            } else {
+                $this->model->createAuthorFromDB($_POST['namename'], $_POST['age'], $_POST['bio']);
+            }
             $this->libraryView->showHomeLocation();
         } else {
             $this->libraryView->showHomeLocation();
@@ -78,8 +82,13 @@ class AuthorsController{
     function updateAuthor($id_author){
         $this->authHelper->checkLoggedIn();
         if(!empty($_POST['namename']) && !empty($_POST['age']) && !empty($_POST['bio'])) {
-            $this->model->updateAuthorFromDB($id_author, $_POST['namename'], $_POST['age'], $_POST['bio']);
-            $this->libraryView->showHomeLocation();
+            if($_FILES['input_name']['type'] == "image/jpg" || $_FILES['input_name']['type'] == "image/jpeg" || $_FILES['input_name']['type'] == "image/png"){
+                $this->model->updateAuthorFromDB($id_author, $_POST['namename'], $_POST['age'], $_POST['bio'], $_FILES['input_name']['tmp_name']);
+                $this->libraryView->showHomeLocation();
+            } else {
+                $this->model->updateAuthorFromDB($id_author, $_POST['namename'], $_POST['age'], $_POST['bio']);
+                $this->libraryView->showHomeLocation();
+            }
         } else {
             $this->libraryView->showHomeLocation();
         }

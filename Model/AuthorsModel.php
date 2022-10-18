@@ -46,28 +46,25 @@ class AuthorsModel{
     
     }
 
-    function createAuthorFromDB($namename, $age, $bio){
-        // preparo la sentencia para devolver el resultado
-        $query = $this->db->prepare("select * from authors");
-            
-        // capturo todos los items para posterior manipulación
-        $query->execute();
-        $authors = $query->fetchAll(PDO::FETCH_OBJ);
-    
-        // busco el ID mas grande, habria que optimizar con lastInsertID()
-        $max = 0;
-        foreach($authors as $author){
-            if($author->id_author > $max){
-                $max = $author->id_author;
-            }
+    function createAuthorFromDB($namename, $age, $bio, $image = null){
+
+        $pathImg = null;
+        if ($image){
+            $pathImg = $this->uploadImage($image);
         }
-        $proxId = $max + 1;
     
         // preparo la sentencia para insertar
-        $query = $this->db->prepare("INSERT INTO authors(id_author, namename, age, bio) VALUES(?, ?, ?, ?) ");
+        $query = $this->db->prepare("INSERT INTO authors(namename, age, bio, image) VALUES(?, ?, ?, ?) ");
     
         // ejecuto la sentencia, le paso un arreglo que va a tomar esos signos de pregunta
-        $query->execute(array($proxId, $namename, $age, $bio));
+        $query->execute([$namename, $age, $bio, $pathImg]);
+    }
+
+    private function uploadImage($image){
+        $target = "img/" . uniqid("", true) . "." 
+        . strtolower(pathinfo($_FILES['input_name']['name'], PATHINFO_EXTENSION));
+        move_uploaded_file($image, $target);
+        return $target;
     }
 
     function deleteAuthorFromDB($id_author){
@@ -79,12 +76,18 @@ class AuthorsModel{
         $query->execute(array($id_author));
     }
 
-    function updateAuthorFromDB($id_author, $namename, $age, $bio){
+    function updateAuthorFromDB($id_author, $namename, $age, $bio, $image = null){
+
+        $pathImg = null;
+        if ($image){
+            $pathImg = $this->uploadImage($image);
+        }
+
         // preparo la sentencia para actualizar
-        $query = $this->db->prepare("UPDATE authors SET namename=?, age=?, bio=? WHERE id_author=?");
+        $query = $this->db->prepare("UPDATE authors SET namename=?, age=?, bio=?, image=? WHERE id_author=?");
     
         // ejecuto la sentencia
-        $query->execute(array($namename, $age, $bio, $id_author));
+        $query->execute(array($namename, $age, $bio, $pathImg, $id_author));
     }
 
 }

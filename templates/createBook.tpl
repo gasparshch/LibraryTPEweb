@@ -1,5 +1,5 @@
-<div class="container text-center">
-    <h3 class="type-letter"> Agregar un libro a la biblioteca</h3>
+<h3 class="type-letter text-center"> Agregar un libro a la biblioteca</h3>
+<div class="container shadow p-3 mb-5 bg-body rounded text-center">
     <form action="createBook" method="post">
         <div class="row align-items-center">
             <div class="col">
